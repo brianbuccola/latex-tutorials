@@ -1,0 +1,492 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                           %%
+%%  Filename: latex-basics.tex               %%
+%%                                           %%
+%%  Date created: 2012-01-28                 %%
+%%                                           %%
+%%  Authors: Brian Buccola, Alanah McKillen  %%
+%%                                           %%
+%%  Contact: brian.buccola@mail.mcgill.ca    %%
+%%           alanah.mckillen@mail.mcgill.ca  %%
+%%                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% BEGIN PREAMBLE
+
+% Declare article class, with options
+% letterpaper = default US paper size
+% 12pt font size
+\documentclass[letterpaper,12pt]{article}
+
+% Add strikeout, underline capability
+% "normalem" option retains default \emph{}
+\usepackage[normalem]{ulem}
+
+% Customize (sub)section headings
+\usepackage{sectsty}
+  % bold, large section fonts
+  \sectionfont{\rmfamily\mdseries\bfseries\large}
+  % italics, normalsize subsection fonts
+  \subsectionfont{\rmfamily\mdseries\itshape\normalsize}
+
+% Customize margins (1 in.)
+\usepackage[margin=1in]{geometry}
+
+% For typing example code verbatim
+\usepackage{verbatim}
+
+% Define syntax environment
+\newenvironment{syntax}{%
+  \quote
+  \textbf{Syntax}
+  \verbatim
+}{%
+  \endverbatim
+  \endquote
+}
+
+% Define example environment
+\newenvironment{example}{%
+  \quote
+  \textbf{Example}
+  \verbatim
+}{%
+  \endverbatim
+  \endquote
+}
+
+% Define example output environment
+\newenvironment{exoutput}{%
+  \quote
+  \textbf{Example output}
+  \endquote
+}
+
+% Define tip command for tips
+\newcommand{\tip}{\textit{Tip: }}
+
+% Customize itemize environment
+\renewenvironment{itemize}{%
+  \begin{list}{$\bullet$}{%
+%   move bullet all the way to left
+    \setlength{\leftmargin}{0em}
+  }
+}{%
+  \end{list}
+}
+
+% Disable indenting (set to 0 inches)
+\setlength{\parindent}{0in}
+
+
+% BEGIN BODY
+
+\begin{document}
+
+% title, names, date, affiliation
+\begin{center}
+{\LARGE \LaTeX{} basics}
+\\[\baselineskip]
+Brian Buccola \& Alanah McKillen \\
+February 2, 2012 \\ McGill University
+\end{center}
+
+
+\section{Overview}
+
+\LaTeX{} is a markup language (and program) for typesetting documents. It
+consists of many commands and environments that specify (to the compiler) how
+the output document should look. In general, commands produce or modify a small
+bit of text, whereas environments modify a larger part of text.
+
+\subsection{Document structure}
+
+\begin{itemize}
+
+\item Every document consists of a ``preamble'' and a ``body''.
+
+\item The preamble includes declarations of document classes, packages,
+    definitions, and other document-wide specifications.
+
+\item The body includes the main text (title, sections, \ldots).
+
+\begin{example}
+% My first LaTeX document!
+
+% PREAMBLE
+\documentclass{article}
+\usepackage{ulem}
+
+% BODY
+\begin{document}
+Hello beautiful world! \sout{Goodbye cruel world!}
+\end{document}
+\end{example}
+
+\begin{exoutput}
+Hello beautiful world! \sout{Goodbye cruel world!}
+\end{exoutput}
+
+\end{itemize}
+
+\subsection{Commands and environments}
+
+\begin{itemize}
+
+\item Every command starts with a backslash, is case-sensitive, and may take
+    options (in square brackets) and arguments (in curly brackets).
+
+\begin{syntax}
+\command[option1,option2,...]{arg1}{arg2}...
+\end{syntax}
+
+\begin{example}
+\textbf{This sentence will be bold.}
+\end{example}
+
+\begin{exoutput}
+\textbf{This sentence will be bold.}
+\end{exoutput}
+
+\item Some commands do not require options or arguments; they simply produce
+    something as is.
+
+\begin{example}
+\ldots
+\end{example}
+
+\begin{exoutput}
+\ldots
+\end{exoutput}
+
+\item Every environment starts with a \verb=\begin= commad and ends with an
+    \verb=\end= command, whose arguments are the environment name.
+
+\begin{syntax}
+\begin{environmentname}
+Text to be modified.
+\end{environmentname}
+\end{syntax}
+
+\begin{example}
+\begin{enumerate}
+\item First item in a numbered list.
+\item Second item.
+\end{enumerate}
+\end{example}
+
+\begin{exoutput}
+\begin{enumerate}
+\item First item in a numbered list.
+\item Second item.
+\end{enumerate}
+\end{exoutput}
+
+\end{itemize}
+
+\subsection{Special characters and accents}
+
+\begin{itemize}
+
+\item \LaTeX{} reserves a number of characters for special purposes, such as
+    curly brackets, as we've seen. The following is a more complete list.
+
+\begin{quote}
+\begin{verbatim}
+# $ % ^ & _ { } ~ \
+\end{verbatim}
+\end{quote}
+
+\item There are usually two ways to produce these characters: (1) use a
+    backslash to ``escape out'', e.g. \verb=\#= produces \#, and (2) use the
+    relevant command for that symbol, e.g.  \verb=\textbackslash= produces
+    \textbackslash.
+
+\item Accents and other diacritics are produced similarly.
+
+\begin{syntax}
+\symbol{character}
+\end{syntax}
+
+\begin{example}
+\^{a} \"{a} \~{a}
+\end{example}
+
+\begin{exoutput}
+\^{a} \"{a} \~{a}
+\end{exoutput}
+
+\item Beginning and ending single quotation marks are produced using \`{} (grave
+    accent) and $'$ (vertical quote), respectively; double quotes are produced
+    by doubling these characters, \emph{not} by using the double quotation
+    character \verb="=.
+
+\begin{example}
+Bill said, ``Hello''.
+\end{example}
+
+\begin{exoutput}
+Bill said, ``Hello''.
+\end{exoutput}
+
+\end{itemize}
+
+\subsection{Whitespace and comments}
+
+\begin{itemize}
+
+\item Consecutive ``whitespace'' characters (spaces, tabs) are treated as one
+    ``space''.
+
+\begin{example}
+The extra whitespace right here        will not show up
+in the output.
+\end{example}
+
+\begin{exoutput}
+The extra whitespace right here        will not show up
+in the output.
+\end{exoutput}
+
+\item Similarly, single line breaks are treated as one ``space''.
+
+\begin{example}
+This
+will
+all be
+on one line.
+\end{example}
+
+\begin{exoutput}
+This
+will
+all be
+on one line.
+\end{exoutput}
+
+\item A double linebreak indicates the start of a new paragraph; more than that
+    is treated as a double linebreak.
+
+\begin{example}
+This is one paragraph that stretches stretches
+stretches stretches stretches onto multiple lines.
+
+This begins a new paragraph.
+\end{example}
+
+\begin{exoutput}
+This is one paragraph that stretches stretches
+stretches stretches stretches onto multiple lines.
+
+This begins a new paragraph.
+\end{exoutput}
+
+\item You can insert your own comments by appending each comment line with
+    \verb=%=; the compiler ignores anything following a \verb=%= on a given
+    line.
+
+\begin{example}
+Some \textit{italic} text. % My comment about fun
+                           % with italics
+\end{example}
+
+\begin{exoutput}
+Some \textit{italic} text. % My comment about fun
+                           % with italics
+\end{exoutput}
+
+\end{itemize}
+
+
+\section{Typesetting: some specifics}
+
+The beauty of \LaTeX{} is that, with just a handful of basic commands, you can
+write a nicely structured and good-looking document without the distractions of
+tweaking and fiddling that come with WYSIWYG word processors. 
+
+\subsection{Document structuring commands}
+
+\begin{itemize}
+
+\item To automatically create a title page, first in the preamble, use the
+    \verb=\title=, \verb=\author=, and \verb=\date= commands to define the
+    title, author, and date; then use the \verb=\maketitle= command in the body
+    to create a title page.
+
+\begin{example}
+\documentclass{article}
+\title{Minimalist Program II: Maximize Minimalism}
+\author{Noam Chomsky}
+\date{\today}
+\begin{document}
+\maketitle
+In this paper, I revise my earlier proposal \ldots
+\end{document}
+\end{example}
+
+\item \tip Use the \verb=\today= command to automatically insert the day on
+    which the document is compiled.
+
+\item To add an abstract, use the \verb=abstract= environment.
+
+\begin{example}
+\begin{abstract}
+This paper defends the geocentric model of the
+universe.
+\end{abstract}
+\end{example}
+
+\item To create section and subsection headings, use the \verb=\section= and
+    \verb=\subsection= commands. They take the (sub)section name as their
+    argument are numbered automatically.
+
+\begin{syntax}
+\section{Section Name}
+\end{syntax}
+
+\item \tip To exclude a (sub)section number, use \verb=\section*= and
+    \verb=\subsection*= instead.
+
+\item To add a footnote, use the \verb=\footnote= command. It takes the entire
+    footnote text as its argument.
+
+\begin{syntax}
+Here's some text.\footnote{Here's a footnote!}
+\end{syntax}
+
+\end{itemize}
+
+\subsection{Modifying text}
+
+\begin{itemize}
+
+\item To make text bold, italics, smallcaps, or typewriter, use the
+    \verb=\textbf=, \verb=\textit=, \verb=\textsc=, and \verb=\texttt= commands.
+
+\item Alternatively, enclose the text in curly braces, preceded by the commands
+    \verb=\bfseries=, \verb=itshape=, \verb=\scshape=, or \verb=\ttfamily=,
+    commands.
+
+\begin{example}
+This is some \textbf{bold}, \textit{italic},
+\textsc{smallcaps}, and \texttt{typewriter} text.
+
+This is some {\bfseries bold}, {\itshape italic},
+{\scshape smallcaps}, and {\ttfamily typewriter} text.
+\end{example}
+
+\begin{exoutput}
+This is some \textbf{bold}, \textit{italic},
+\textsc{smallcaps}, and \texttt{typewriter} text.
+
+This is some {\bfseries bold}, {\itshape italic},
+{\scshape smallcaps}, and {\ttfamily typewriter} text.
+\end{exoutput}
+
+\item \tip Some of the fullform commands can be nested:
+    \verb=\textbf{\textit{hi!}}= produces \textbf{\textit{hi!}}.
+
+\item To change font size, use the commands \verb=\tiny=, \verb=\small=,
+    \verb=\large=, \verb=\Large=, \verb=\LARGE=, etc. (See documentation for
+    full list.)
+
+\begin{example}
+Some {\tiny tiny}, {\small small}, normal, {\large
+large}, {\Large larger}, {\LARGE even larger}
+text.
+\end{example}
+
+\begin{exoutput}
+Some {\tiny tiny}, {\small small}, normal, {\large
+large}, {\Large larger}, {\LARGE even larger}
+text.
+\end{exoutput}
+
+\item These font sizes are relative to the font size option declared in the
+    document class, e.g. \verb=\large= in a \verb=12pt= document is roughly the
+    same size as \verb=\Large= in a \verb=10pt= document.
+
+\end{itemize}
+
+\subsection{Math mode}
+
+\begin{itemize}
+
+\item To produce math symbols, enclose your math text in dollar symbols; this is
+    called math mode.
+
+\begin{example}
+$\forall x \in \mathcal{P}(A): \exists y \in
+\phi(B \times C): y = x^5 - \alpha_3$
+\end{example}
+
+\begin{exoutput}
+$\forall x \in \mathcal{P}(A): \exists y \in
+\phi(B \times C): y = x^5 - \alpha_3$
+\end{exoutput}
+
+\item Math symbols can be thrown right into normal text.
+
+\begin{example}
+If $\alpha$ is of type $a \rightarrow b$ \ldots
+\end{example}
+
+\begin{exoutput}
+If $\alpha$ is of type $a \rightarrow b$ \ldots
+\end{exoutput}
+
+\end{itemize}
+
+\subsection{Some useful commands}
+
+\begin{list}{}{}
+\item \verb=\ldots  = create ellipsis dots
+\item \verb=\noindent  = disable indent for this paragraph
+\item \verb=\hfill  = fill horizontal space (moves the following text all the
+    way rightward)
+\end{list}
+
+\subsection{Some useful environments}
+
+\begin{itemize}
+
+\item Here's a list of some useful environments, all of which follow the syntax
+    described earlier.
+
+\begin{list}{}{}
+\item \verb=itemize  = create bulleted lists
+\item \verb=enumerate  = create numbered lists
+\item \verb=center  = center a block of text
+\item \verb=flushleft  = left-align a block of text
+\item \verb=flushright  = right-align a block of text\footnote{Text is left-
+        \textit{and} right-aligned (justified) by default.}
+\item \verb=tabular  = create a table
+\item \verb=figure  = create a figure
+\item \verb=quote  = create a block quote
+\end{list}
+
+\end{itemize}
+
+
+\section{Next time?}
+
+\begin{list}{$\bullet$}{Advanced topics}
+\item bibliography (Bib\TeX{})
+\item labels and references
+\item defining new commands and environments; redefining current ones
+\item hyperlinks, PDF metadata (\verb=hyperref=)
+\item presentation slides (\verb=beamer=)
+\item special headers and footers (\verb=fancyhdr=)
+\item custom sections (\verb=sectsty=)
+\end{list}
+
+\begin{list}{$\bullet$}{Linguistics-specific topics}
+\item numbered examples (\verb=linguex=)
+\item syntax trees (\verb=qtree=)
+\item IPA (\verb=tipa=)
+\end{list}
+
+
+\end{document}

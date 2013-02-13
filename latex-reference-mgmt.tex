@@ -1,0 +1,282 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                           %%
+%%  Filename: latex-reference-mgmt.tex       %%
+%%                                           %%
+%%  Date created: 2012-08-19                 %%
+%%                                           %%
+%%  Authors: Brian Buccola, Alanah McKillen  %%
+%%                                           %%
+%%  Contact: brian.buccola@mail.mcgill.ca    %%
+%%           alanah.mckillen@mail.mcgill.ca  %%
+%%                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% BEGIN PREAMBLE
+
+% Declare article class, with options
+% letterpaper = default US paper size
+% 12pt font size
+\documentclass[letterpaper,12pt]{article}
+
+% Customize (sub)section headings
+\usepackage{sectsty}
+  % bold, large section fonts
+  \sectionfont{\rmfamily\mdseries\bfseries\large}
+
+% Customize margins (1 in.)
+\usepackage[margin=1in]{geometry}
+
+% For typing example code verbatim
+\usepackage{verbatim}
+
+% Define new counter for examples
+\newcounter{ex-count}
+% Start counter at 1 instead of 0
+\setcounter{ex-count}{1}
+
+% Define example environment
+\newenvironment{example}{%
+  \quote
+  \textbf{Example \arabic{ex-count}}
+  \verbatim
+}{%
+  \endverbatim
+  \endquote
+  \stepcounter{ex-count}
+}
+
+% Customize itemize environment
+\renewenvironment{itemize}{%
+  \begin{list}{$\bullet$}{%
+%   move bullet all the way to left
+    \setlength{\leftmargin}{0em}
+  }
+}{%
+  \end{list}
+}
+
+% Disable indenting (set to 0 inches)
+\setlength{\parindent}{0in}
+
+% Add space between paragraphs
+\usepackage{parskip}
+
+
+% BEGIN BODY
+
+\begin{document}
+
+% title, names, date, affiliation
+\begin{center}
+    {\LARGE \LaTeX{} reference management}
+    \\[\baselineskip]
+    Brian Buccola \& Alanah McKillen \\
+    August 20, 2012 \\ McGill University
+\end{center}
+
+\vspace{\baselineskip}
+
+This document describes how to manage and cite references in \LaTeX{}. We begin
+by discussing \LaTeX{}'s native \verb-\cite- command and document--internal
+method of encoding reference entries (``bibitems''). We then introduce a more
+robust and flexible method: using a package (\verb-natbib-) for additional
+citation commands and style options, and Bib\TeX{} for standardized, external
+reference management.
+
+
+\section{\LaTeX{}'s native reference management}
+
+\LaTeX{} provides a simple method of creating and citing reference entries
+(``bibitems'') on the fly, with a clean and compact look. This is useful for a
+document with just a few references that you'll probably never need again, e.g.,
+a class assignment, presentation, etc. Although this method is limited, its
+simplicity and speed are an advantage, and it's useful to understand and tease
+apart \LaTeX{}'s own reference system before diving into more advanced systems.
+
+\LaTeX{} provides a command called \verb-\cite- for automatically citing
+references, and an environment called \verb-thebibliography- for listing
+references, which are denoted by the \verb-bibitem- command. The latter has the
+syntax \verb-\bibitem{citekey}reference_data-, where the \emph{citekey} is
+argument taken by the \verb-\cite- command.
+
+The following is a working minimal example:\footnote{%
+    %
+    The \texttt{9} in the first argument to \texttt{thebibliography} specifies
+    the number of reference entries you have, but in a strange way: the actual
+    number (9 here) is meaningless; what matters is the number of digits (1
+    here). Thus, \texttt{9} (or equivalently, \texttt{4}) means only one digit
+    is required for each entry, i.e., because there are 1--9 total entries,
+    whereas \texttt{99} (or equivalently, \texttt{37}) means two digits are
+    required for each entry, and so on. In other words, you're specifying the
+    number of places needed.
+}
+
+\begin{example}
+According to \cite{chomsky1959} ...
+...
+\begin{thebibliography}{9}
+    \bibitem{chomsky1959}
+        Noam Chomsky.
+        \emph{On certain formal properties of grammars}.
+        1959.
+        Information and Control 2, 137--167.
+\end{thebibliography}
+\end{example}
+
+By default, this produces inline \emph{bracketed numerals} for citations:
+``According to [1] \ldots''. You can modify a bibitem's citation style with an
+option: \verb-\bibitem[Chom59]{chomsky1959}- would produce ``[Chom59]'' instead
+of ``[1]'', both in the paragraph and in the reference list.
+
+Note that the reference data for a bibitem is plain text with no structure, as
+far as \LaTeX{} is concerned (linebreaks are ignored). This means (1) \LaTeX{}
+cannot extract info about the author, journal, year of publication, etc., hence
+why the numeric citation style is so crude, and (2) it's up to you to remember
+to add all relevant data, as well as formatting, e.g., italics/emphasis.
+
+As a solution to these difficulties, it's usually best to use a package like
+\verb-natbib-, together with the Bib\TeX{} reference management system.
+
+
+\section{Package help and Bib\TeX{}}
+
+\verb-natbib- provides an array of citation commands that effectively supersede
+\LaTeX{}'s \verb-\cite- command by allowing you to cite the author and date,
+just the author, just the date, the date in parentheses, etc. In addition,
+\verb-natbib- provides the command \verb-bibliographystyle-, which allows you to
+automatically format all citations (inline and in the reference list) according
+to a style guide, provided you have the \verb-.bst- style file. (Most \TeX{}
+distributions come with \verb-apa- and many others.)
+
+Of course, \verb-natbib- must somehow be able to figure out a reference's
+author, date, etc. from the reference entry. While it's possible to format a
+bibitem (\LaTeX{}'s native entry format) in such a way that \verb-natbib- can
+parse and extract the data properly, a much easier way is to use Bib\TeX{},
+which allows you to keep all your references in a single text file (\verb-.bib-
+extension) organized in a standardized format.
+
+Bib\TeX{} provides standardized organization of many different publication
+types, including \verb-article-, \verb-inproceedings-, \verb-phdthesis-, and
+\verb-unpublished-, each of which has its own set of required and optional
+fields. A Bib\TeX{} file can be created and edited with a simple text editor;
+however, an easier way is to use a helper application like BibDesk or JabRef as
+a frontend to your \verb-.bib- file. These applications have all the required
+and optional fields programmed into them, so that you don't have to look them
+up.
+
+The following is a minimal working example of a Bib\TeX{} file---let's call it
+\verb-myrefs.bib-.
+
+\begin{example}
+@ARTICLE{chomsky1959,
+  author = {Noam Chomsky},
+  title = {On Certain Formal Properties of Grammars},
+  journal = {Information and Control},
+  year = {1959},
+  volume = {2},
+  pages = {137--167},
+}
+\end{example}
+
+To use \verb-natbib-, simply add the \verb-natbib- package to your preamble,
+specify your \verb-.bib- file, and specify the bibliography style you'd like to
+use (e.g., \verb-apa-).\footnote{%
+    %
+    Note that there is no \texttt{.bib} extension given for the bibfile. Note
+    also that, written as such, the file must be located either in the same
+    directory as the file you're compiling, or in the default path searched by
+    Bib\TeX{}. To be safe, you can simply include the full path name, e.g.,
+    \texttt{/home/john/references/myrefs}.
+}
+
+\begin{example}
+\usepackage{natbib}
+...
+According to \citet{chomsky1959} ... After \citeyear{chomsky1959},
+\citeauthor{chomsky1959} went on to ...
+...
+\bibliography{myrefs}
+\bibliographystyle{apa}
+\end{example}
+
+To compile your document---let's call it \verb-mydoc.tex----run the
+following:\footnote{%
+    %
+    \texttt{pdflatex} can be substituted by \texttt{latex}. For \TeX{}shop
+    users: typeset first using ``LaTeX'', then ``BibTeX'', then ``LaTeX'' twice,
+    which can be found under the ``Typeset'' menu.
+}
+
+\begin{example}
+pdflatex mydoc.tex
+bibtex mydoc
+pdflatex mydoc.tex
+pdflatex mydoc.tex
+\end{example}
+
+What's going on here? Essentially: (1) the first \verb-pdflatex- compile gathers
+up all the citekeys and the bibfile and writes them to \verb-mydoc.aux-; (2) the
+\verb-bibtex- command reads \verb-mydoc.aux- and \verb-myrefs.bib- to determine
+the reference list; (3) the second \verb-pdflatex- compile inserts the reference
+list but without proper labels (you'll see things like ``According to
+\textbf{??}''); (4) the final \verb-pdflatex- compile fixes all labels.
+
+Read the Bib\TeX{} documentation for further info. For a comprehensive list of
+all \verb-natbib- commands and options, check out the \verb-natbib-
+documentation. For a quick and easy cheat sheet, go to:
+\texttt{http://merkel.zoneo.net/Latex/natbib.php}.
+
+
+\section{Tips, tricks, and caveats}
+
+\begin{itemize}
+
+\item Some bibliography styles decapitalize all letters other than the very
+    first. For example, \verb-title = {Quantification and ACD}- gets formatted
+    as \emph{Quantification and acd}. This is a design feature, not flaw: it
+    leaves formatting to the style file, not the bibliography file. To hardcode
+    capitalization into your bibliography entry, just surround the capitalized
+    letter in curly brackets: \verb-{ACD}-, \verb-{N}ew {Y}ork-, etc.
+
+\item You can use standard \LaTeX{} commands for formatting (certain parts of)
+    reference entries. This is necessary for special characters
+    (\verb-g\"{o}del- for ``G\"{o}del'') and anything you need italicized
+    (\verb-An Analysis of \emph{Even}- for ``An analysis of \emph{even}'').
+
+\item The various cite commands can take \emph{multiple} citekeys as arguments,
+    separated by commas. So instead of \verb-(see \cite{ref1}; \cite{ref2}-),
+    you can write \verb-(see \cite{ref1,ref2})-.
+
+\item To add a reference to the reference list that you do not actually cite in
+    the document, use \verb-\nocite{citekey}-. To add \emph{all} references from
+    the specified \verb-.bib- file to the reference list, use \verb-\nocite{*}-.
+    This is useful for keeping a clean--looking copy of all your references,
+    testing out different bibliography styles, double--checking that your
+    entries are properly formatted, etc.
+
+\item The space between entries in the reference list can be modified with the
+    \verb-\bibsep- value, e.g., add \verb-\setlength{\bibsep}{0pt}- to your
+    preamble to have a single linebreak (no space) between entries.
+
+\item You can create your own macro for possessive citations (e.g., ``In
+    Chomsky's (1959) opinion'') as follows:
+
+\begin{example}
+\newcommand{\citetposs}[1]{\citeauthor{#1}'s \citeyearpar{#1}}
+...
+In \citetposs{chomsky1959} opinion ...
+\end{example}
+
+\item Some excellent free and open--source frontends for Bib\TeX{} are JabRef
+    (Windows, Linux, Mac OS X) and BibDesk (Mac OS X). They include features
+    like classifying entries by keyword, creating sub--bibliographies (e.g., for
+    small projects), import/export of various formats, automatic customized
+    citekey generation, searching and extracting references from databases
+    (Google Scholar, arXiv, CiteseerX), etc.
+
+\end{itemize}
+
+
+\end{document}

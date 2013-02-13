@@ -1,0 +1,307 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                           %%
+%%  Filename: latex-getting-started.tex      %%
+%%                                           %%
+%%  Date created: 2011-12-19                 %%
+%%                                           %%
+%%  Authors: Brian Buccola, Alanah McKillen  %%
+%%                                           %%
+%%  Contact: brian.buccola@mail.mcgill.ca    %%
+%%           alanah.mckillen@mail.mcgill.ca  %%
+%%                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The percent sign is for commenting.
+% Comments are not read by the compiler.
+
+
+% This command starts every .tex file.
+\documentclass{article}
+
+
+% This package properly encodes output fonts.
+% Important for copying/pasting text from PDF outputs.
+\usepackage[T1]{fontenc}
+
+% This package makes links clickable.
+\usepackage{hyperref}
+
+
+% Commands for the title page
+\title{Getting started with \LaTeX{}}       % Defines the title
+\author{Brian Buccola \\ Alanah McKillen}   % Defines the author(s)
+\date{December 19, 2011}                    % Defines the date
+
+% New, simple command for inline notes
+\newcommand{\note}{\textbf{Note: }}
+
+
+% This command begins the document environment
+\begin{document}
+
+% This command produces a title from the commands above.
+\maketitle
+
+
+% The \section command begins a section.
+\section{Introduction}
+
+
+% The \subsection command begins a subsection.
+\subsection{What are \TeX{} and \LaTeX{}?}
+
+\TeX{} is a powerful typesetting system designed by mathematician and computer
+scientist Donald Knuth back in 1978. It understands a few hundred low-level
+commands called primitives, which are rarely used directly anymore. Nowadays,
+most users use \LaTeX{}, which is a markup language for \TeX{} developed in the
+1980s by Leslie Lamport. It incorporates many more useful and intuitive commands
+that allow users to concentrate on content rather than on formatting: you write,
+and \LaTeX{} does the rest.
+
+\LaTeX{} comes in a variety of ``distributions'', the most common ones currently
+being \TeX{} Live 2011 for Unix machines, and MiK\TeX{} for Windows. (The most
+popular distribution for Mac OS X, Mac\TeX, is a bundle of \TeX{} Live 2011 and
+some extra stuff.)
+
+\subsection{About this document}
+
+This document includes basic instructions on how to install the latest version
+of \LaTeX{} onto Mac, Windows, and Linux machines. For more detailed
+instructions specific to your operating system, just type \texttt{latex
+installation}, followed by the name of your OS, into any good search engine.
+
+In addition, this document describes the basic steps you'll run through to
+write, compile, and view your first, very simple document. You may also wish to
+look at the source file for this document, \texttt{latex-getting-started.tex},
+to get an idea of what some of the commands and environments look like. (You can
+even edit and/or compile the source file yourself for practice.)
+
+Finally, there are some resources at the end of the document. However, as
+always, a good search engine is your best resource.
+
+If you have any questions or comments, just contact us at:
+
+% The quote environment is an easy way to indent a block of text.
+\begin{quote}
+% Use \\ to begin a new line.
+\href{mailto:brian.buccola@mail.mcgill.ca}{\tt brian.buccola@mail.mcgill.ca} \\
+\href{mailto:alanah.mckillen@mail.mcgill.ca}{\tt alanah.mckillen@mail.mcgill.ca}
+\end{quote}
+
+Happy holidays, and happy \LaTeX{}ing!
+
+
+\section{Mac OS X}
+
+Mac users will want to download Mac\TeX{}, available at
+\url{http://www.tug.org/mactex/2011/}. Mac\TeX{} is a package that consists of
+the complete \TeX{} Live 2011 distribution of \LaTeX{}, as well as many useful
+``\TeX{}tras'', like BibDesk (for managing references) and \TeX{}Shop (for easy
+editing, compiling, and viewing of documents).
+
+To install, click the link above, and download the Mac\TeX{} package:
+
+\begin{quote}
+\begin{verbatim}
+MacTeX.mpkg.zip
+\end{verbatim}
+\end{quote}
+
+Once the \texttt{.zip} file is downloaded, unzip it, double click on
+\texttt{MacTeX.mpkg}, and follow the installation instructions that come up on
+the screen. After installing, you will have a \texttt{tex} folder in your
+applications folder which includes BibDesk, \TeX{}Shop, etc.
+
+The package is over 1 GB in size, but it's worth the download: it contains just
+about every package, macro, font, etc. that you'll probably ever need, meaning
+you'll rarely (if ever) have to manually download new packages.
+
+
+\section{Windows}
+
+Windows users seem to have two options: MiK\TeX{}, the standard Windows
+implementation of \TeX{} for some time now, and pro\TeX{}t, a relatively new
+distribution based on MiK\TeX{}. The \LaTeX{} project website,
+\url{www.latex-project.org}, recommends pro\TeX{}t, but you may want to research
+a bit before choosing.
+
+To install pro\TeX{}t, go to \url{www.tug.org/protext/}, and follow the
+directions.
+
+To install MiK\TeX{}, go to \url{www.miktex.org/2.9/setup}, and follow the
+directions.
+
+Since Alanah uses Mac OS X and Brian uses Linux, neither of us has any
+experience installing or using \LaTeX{} on a Windows machine. However, if you
+have questions, please contact us anyway, and we'll do our best to help.
+
+
+\section{Linux}
+
+The easiest way for Linux users to get \LaTeX{} is to simply check your usual
+software source for \TeX{} Live. You can either install \texttt{texlive}, which
+is a basic subset of the full package, or \texttt{texlive-full}, which is the
+complete package. \texttt{texlive-full} is recommended, if you have the time and
+storage space, since it will minimize the amount of packages, fonts, etc. you
+may have to install later.
+
+The other option is to get \TeX{} Live directly from \url{www.tug.org/texlive/}.
+Just follow the directions there, and/or ask Brian for help.
+
+\note Some Linux distros may be behind in their \TeX{} packages. For example,
+Ubuntu currently ships with \TeX{} Live 2009. So check before downloading from
+your software source, or get the latest version directly from the site just to
+be safe.
+
+
+\section{Writing, compiling, \& viewing}
+
+Now that you've (hopefully) got \LaTeX{} installed, let's produce a document!
+The basic steps are the following.
+
+% The enumerate environment begins a numbered list.
+\begin{enumerate}
+\item Using a good text editor, open a new text file, give it a \texttt{.tex}
+    extension, and write up your document in plain text, using \LaTeX{} markup
+    (commands) for typesetting.
+\item Save the file, and compile it using \LaTeX{}, which produces a PDF output
+    (or possibly DVI, depending on which command/setting is used).
+\item View your output to see how it looks.
+\end{enumerate}
+
+\note By ``good text editor'', we just mean a text editor with \LaTeX{} syntax
+highlighting. The editors that come with \TeX{}Shop (bundled with Mac\TeX{}) and
+with \TeX{}nicCenter (bundled with pro\TeX{}) have syntax highlighting. Linux
+users have several options available, but we recommend Vim.
+
+\note \TeX{}Shop (and probably \TeX{}nicCenter) has a button called ``typeset''
+which, when pressed, saves your file, compiles it, and opens the output in a
+document viewer, all at once.
+
+We'll now go through these steps in more detail, one by one.
+
+\subsection{Step 1: Write}
+
+Using your editor, open up a blank text file, and give it a \texttt{.tex}
+extension by saving the file as \texttt{hello-world.tex}. Now your editor knows
+to look out for \LaTeX{} markup.
+
+The first line you should write is the following. \note \LaTeX{} commands always
+start with a backslash.
+
+\begin{quote}
+\begin{verbatim}
+\documentclass{article}
+\end{verbatim}
+\end{quote}
+
+This command tells \LaTeX{} what class of document you wish to write. The most
+common by far is the \texttt{article} class; it's suitable for nearly
+everything, including research papers, handouts, etc.
+
+Next, begin the actual document by writing the following command beneath the one
+you just wrote.
+
+\begin{quote}
+\begin{verbatim}
+\begin{document}
+\end{verbatim}
+\end{quote}
+
+This command tells \LaTeX{} where the body of the document actually begins.
+Everything after this is what gets produced in the final output.
+
+Now let's produce a sentence. Beneath \verb=\begin{document}=, write the
+following sentence.
+
+\begin{quote}
+\begin{verbatim}
+Hello world!
+\end{verbatim}
+\end{quote}
+
+For now, don't add anything else, because our purpose here is just to produce a
+successful output.
+
+Now we end the document by adding the following, final line.
+
+\begin{quote}
+\begin{verbatim}
+\end{document}
+\end{verbatim}
+\end{quote}
+
+So your entire text file should look something like this:
+
+\begin{quote}
+\begin{verbatim}
+\documentclass{article}
+\begin{document}
+Hello world!
+\end{document}
+\end{verbatim}
+\end{quote}
+
+Pretty simple! Now save the file, and we are ready to compile.
+
+\subsection{Step 2: Compile}
+
+Compiling a \TeX{} file just means feeding \LaTeX{} a text file with a
+\texttt{.tex} extension, containing only plain text and \LaTeX{} markup, and
+getting a PDF (or DVI) output.
+
+To compile, Mac and Windows users should look for a ``typeset'' or ``compile''
+or ``build'' button in their text editor window. (You may first need to
+configure which output file type you want.) Linux users can run the following
+command in terminal:
+
+\begin{quote}
+\begin{verbatim}
+pdflatex hello-world.tex
+\end{verbatim}
+\end{quote}
+
+If all goes well, you should end up with a file called \texttt{hello-world.pdf},
+or \texttt{hello-world.dvi}. If, however, you get an error, check your text file
+for typos, and also make sure it's been saved before compiling.
+
+\note You'll also end up with some files having extensions like \texttt{.aux},
+\texttt{.out}, and \texttt{.log}. These are where \LaTeX{} keeps track of things
+like labels and compiling errors. You can ignore these files for now.
+
+\subsection{Step 3: View the output}
+
+This the easy part. Using your favorite document viewer (or whatever came with
+your \LaTeX{} distribution), open your PDF and make sure you see ``Hello
+world!''.
+
+At this point, you can go back to your source file, \texttt{hello-world.tex},
+and play around, edit, re-compile, and re-view. Don't forget to save each time
+before compiling!
+
+
+\section{Resources}
+
+The following is a list of useful resources for getting started with \LaTeX{}.
+You can find many more by searching online for \texttt{latex resources}, and you
+can almost always find help with specific topics by searching directly for
+whatever it is you need, e.g. \texttt{latex tables}, \texttt{latex line
+spacing}, etc.
+
+% The itemize environment begins an unnumbered list (with bullets by default).
+\begin{itemize}
+\item \LaTeX{} Wikibook \\ \url{http://en.wikibooks.org/wiki/LaTeX} \\ (Perhaps
+    the best place to start; it's also a great reference, and the one that
+    usually comes up first in Google results.)
+\item \emph{The Not So Short Introduction to \LaTeXe} \\
+    \url{http://tobi.oetiker.ch/lshort/lshort.pdf} \\ (Much more detailed; super
+    useful, especially when you're offline.)
+\item \LaTeX{} for linguists \\
+    \url{http://www.essex.ac.uk/linguistics/external/clmt/latex4ling/} \\ (Tips
+    on numbered examples, syntax trees, OT tableaux, etc. \\ Caveat: some of
+    this info is outdated.)
+\end{itemize}
+
+
+% This command ends every .tex file.
+\end{document}

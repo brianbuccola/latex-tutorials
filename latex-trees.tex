@@ -1,0 +1,121 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                           %%
+%%  Filename: latex-trees.tex                %%
+%%                                           %%
+%%  Date created: 2012-08-19                 %%
+%%                                           %%
+%%  Authors: Alanah McKillen, Brian Buccola  %%
+%%                                           %%
+%%  Contact: alanah.mckillen@mail.mcgill.ca  %%
+%%           brian.buccola@mail.mcgill.ca    %%
+%%                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[oneside,12pt]{article}
+\usepackage[T1]{fontenc}
+
+\usepackage[]{qtree} % options: center, nocenter
+\usepackage{tree-dvips} % needed for drawing arrows
+
+\usepackage{linguex} % needed for numbered examples
+
+
+%===============
+
+\begin{document}
+
+% Drawing trees with qtree is possible using pdflatex (Mac users: usually
+% selected by default under the typesetting menu in TexShop), but in order to
+% draw arrows using the tree-dvips package, the .tex file needs to by typeset
+% with latex (TeX and DVI option).
+
+\begin{center}
+{\LARGE Trees and numbered examples in \LaTeX{}}
+\\[\baselineskip]
+Alanah McKillen \& Brian Buccola \\
+August 20, 2012 \\
+McGill University
+\end{center}
+
+
+\section{Basic Tree Drawing}
+
+\Tree [.A B C D E F ]
+% each maximal and intermediate node is specified with a period after the
+% bracket, terminal nodes have no need for square brackets
+
+
+\Tree [.A B [.C D  [.E F G ] ] ]
+% (right branching) Sensitive to spacing before and after brackets. Include a
+% space after a node is specified, between brackets, between terminal node and
+% closing bracket
+
+
+\Tree [.A [.B [.C D E ] F ] G  ]
+% (left branching)
+
+
+\Tree [.S John [.VP kissed Mary ] ]
+% simple tree, terminal nodes with more than one element must be enclosed in {},
+% e.g. {the dog}
+
+
+\Tree [.IP [.NP [.N\1 [.N\0 John ] ] ] [.I\1 [.I\0 +pst ] [.VP [.V\1 [.V\0 kissed ] [.NP [.N\1 [.N\0 Mary ] ] ] ] ] ] ]
+% simple tree using X-bar structure. bar levels \1, head levels \0
+
+
+\Tree [.A leaf_1 [.B leaf_2 [.C leaf_3  [.D leaf_4 [.E leaf_5 [.F leaf_6 [.G leaf_7 {last} ] ] ] ] ] ] ]
+% use !{\qbalance} after the last node to get balanced trees, !\qsetw{2cm}
+% between any two nodes to change the distance between them
+
+
+\Tree [.IP \qroof{John}.NP [.I\1 [.I\0 +pst ] [.VP [.V\1 [.V\0 kissed ] \qroof{Mary}.NP ] ] ] ]
+% triangle roofs \qroof which draws a "roof" above a phrase. If there is a lot
+% of content under a roof it can be put on multiple lines by using \\ {the cat
+% in the hat \\ with the bright \\ red bow} 
+
+
+\section{Drawing Arrows}
+
+\Tree [.IP [.NP [.N\1 [.N\0 \node{M}{Mary_i} ] ] ] [.I\1 [.I\0 was ] [.VP [.V\1 [.V\0 kissed ]  \node{t}{t_i}  ] ] ] ]
+% node command takes two arguments, one is the name of your node, the other
+% specified what the node is
+\abarnodeconnect[-1cm]{t}{M}
+% \anodecurve[b]{t}[b]{M}{2.5cm}
+% options specify the position the arrow stops or starts at: bl = bottom left,
+% tl = top left, br, b, t, etc. Arrows can be dashed using the \makedash{}
+% command placed at the beginning of the arrow command:
+% {\makedash{4pt}\anodecurve...}
+
+
+{\tiny \Tree [.TP \qroof{John}.DP$_j$ [.T\1 was [.VP willing [.TP [.\node{2}{DP$_2$} every [.NP book [.CP \node{1}{Op$_1$} [.C\1 that [.TP \qroof{Mary}.DP [.T\1 did [.VP read \node{t1}{t$_1$} !{\qbalance} ] ] ] ] ] ] ] !\qsetw{5cm} [.TP PRO$_j$ [.T\1 to [.VP read \node{t2}{t$_2$} !{\qbalance} ] ] ] ] ] ] ]}
+\anodecurve[b]{t1}[b]{1}{2.5cm}
+\anodecurve[r]{t2}[t]{2}{5.0cm}
+% adjusting the size of the tree using standard latex font size commands:
+% {\tiny} {\small}, etc.
+
+\vspace{2cm}
+
+
+\section{Trees and numbered examples}
+
+\ex. \Tree [.A [.B C D ] [.E F ]  ]
+% numbering using linguex package, tree can be not centered using
+% \qtreecenterfalse before the \Tree command
+
+
+\ex.
+\a. \Tree [.S John [.VP kissed Mary ] ] 
+\b. \Tree [.IP [.NP [.N\1 [.N\0 John ] ] ] [.I\1 [.I\0 +pst ] [.VP [.V\1 [.V\0 kissed ] [.NP [.N\1 [.N\0 Mary ] ] ] ] ] ] ]
+% multiple trees per example vertical
+
+
+\ex.
+a. \Tree [.S John [.VP kissed Mary ] ]
+\hskip 2cm
+b. \Tree [.IP [.NP [.N\1 [.N\0 John ] ] ] [.I\1 [.I\0 +pst ] [.VP [.V\1 [.V\0 kissed ] [.NP [.N\1 [.N\0 Mary ] ] ] ] ] ] ]
+% multiple trees per example horizontal
+
+
+\end{document}
